@@ -9,6 +9,21 @@ final int START_BUTTON_Y = 360;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil8x24;
+PImage life;
+
+int groundhogMove;
+int groundhogX = 320;
+int groundhogY = 80;
+boolean upPressed = false;
+boolean downPressed = false;
+boolean leftPressed = false;
+boolean rightPressed = false;
+
+
+//life
+int lifescore = 2;
+int heartFirst = 10;
+int heartPlus = 70;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -26,6 +41,7 @@ void setup() {
 	restartNormal = loadImage("img/restartNormal.png");
 	restartHovered = loadImage("img/restartHovered.png");
 	soil8x24 = loadImage("img/soil8x24.png");
+  life = loadImage("img/life.png");
 }
 
 void draw() {
@@ -69,25 +85,37 @@ void draw() {
 
 		// Background
 		image(bg, 0, 0);
-
 		// Sun
 	    stroke(255,255,0);
 	    strokeWeight(5);
 	    fill(253,184,19);
 	    ellipse(590,50,120,120);
-
 		// Grass
 		fill(124, 204, 25);
 		noStroke();
 		rect(0, 160 - GRASS_HEIGHT, width, GRASS_HEIGHT);
-
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
 		image(soil8x24, 0, 160);
 
 		// Player
 
 		// Health UI
-
+    //heart
+         if (lifescore == 0){
+            gameState = GAME_OVER;
+        }if (lifescore > 0){
+           image(life, heartFirst,10);
+        }if (lifescore > 1){
+           image(life, heartFirst+(heartPlus)*1,10);
+        }if (lifescore > 2){
+           image(life, heartFirst+(heartPlus)*2,10);
+        }if (lifescore > 3){
+           image(life, heartFirst+(heartPlus)*3,10);
+        }if (lifescore > 4){
+           image(life, heartFirst+(heartPlus)*4,10);
+        }if (lifescore > 5){
+           lifescore = 5;
+        }
 		break;
 
 		case GAME_OVER: // Gameover Screen
@@ -101,6 +129,10 @@ void draw() {
 			image(restartHovered, START_BUTTON_X, START_BUTTON_Y);
 			if(mousePressed){
 				gameState = GAME_RUN;
+        lifescore = 2;
+        groundhogX = 320;
+        groundhogY = 80;
+        soilderX = -50;
 				mousePressed = false;
 				// Remember to initialize the game here!
 			}
@@ -135,11 +167,11 @@ void keyPressed(){
       break;
 
       case 'a':
-      if(playerHealth > 0) playerHealth --;
+      if(lifescore > 0) lifescore --;
       break;
 
       case 'd':
-      if(playerHealth < 5) playerHealth ++;
+      if(playerHealth < 5) lifescore ++;
       break;
     }
 }
