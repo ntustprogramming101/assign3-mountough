@@ -1,3 +1,5 @@
+
+
 final int GAME_START = 0, GAME_RUN = 1, GAME_OVER = 2;
 int gameState = 0;
 
@@ -213,7 +215,7 @@ void draw() {
           if(soilY%grid==0 && liDeepGround == false){
           soilderDeep = floor(random(4)+2)*grid;}
         }
-    //hit
+    /*hit 你們這些經驗值的奴隸QQ*/
     if (willHurt == true){
         if (soilderX < groundhogX+80 && soilderX+80 > groundhogX &&
             soilderDeep < groundhogY+80 && soilderDeep+grid > groundhogY){
