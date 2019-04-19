@@ -267,6 +267,7 @@ void draw() {
        liDeepGround = false;
        deepGround = false;
        movement=STOP;
+       noTint();
        gameState = GAME_RUN;
 			}
 		}else{
