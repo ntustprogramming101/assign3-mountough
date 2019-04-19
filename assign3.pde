@@ -1,5 +1,3 @@
-
-
 final int GAME_START = 0, GAME_RUN = 1, GAME_OVER = 2;
 int gameState = 0;
 
@@ -16,9 +14,10 @@ PImage soil8x24,soil0, soil1, soil2, soil3, soil4, soil5, stone1 ,stone2;
 int grid = 80;
 int groundhogX = grid*4;
 int groundhogY = grid;
-int groundhogSpeed = 5;
+int groundhogSpeed = grid/15;
 final int STOP = 0, GO_DOWN1 = 1, GO_DOWN2 = 2, GO_RIGHT = 3, GO_LEFT = 4;
 int movement = STOP;
+boolean moving = false;
 
 
 //PImage [] soils = new PImage [6];
@@ -30,6 +29,7 @@ int soilderDeep = (floor(random(4))+2)*grid;
 int soilderX = -50;
 int soilderXSpeed = 5;
 boolean willHurt = true;
+int supTime = 0, addTime = 1;
 
 int cabbageX =(floor(random(8)))*grid;
 int cabbageY =(floor(random(4))+2)*grid;
@@ -135,6 +135,7 @@ void draw() {
          for (int y=grid*22 ; y<=grid*26 ; y+=grid){
            for (int x=0 ; x<width ; x+=grid){
              image(soil5, x, y-soilY); }}
+             
     // stone
          for (int i=0 ; i<=8 ; i++){
            image(stone1, grid*i, grid*(i+2)-soilY);}
@@ -157,9 +158,11 @@ void draw() {
 		// Player
         image(groundhog,groundhogX, groundhogY);
         if (soilY>=1600){deepGround = true;}
+        if (soilY>=160){liDeepGround = true;}
         switch(movement){
           case STOP:
             groundhog = loadImage("img/groundhogIdle.png");
+            moving = false;
             break;
           case GO_LEFT:
             groundhogX-=groundhogSpeed;
@@ -214,7 +217,8 @@ void draw() {
           if(soilY%grid==0 && liDeepGround == false){
           soilderDeep = floor(random(4)+2)*grid;}
         }
-    /*hit 你們這些經驗值的奴隸QQ*/
+
+    //hit
     if (willHurt == true){
         if (soilderX < groundhogX+80 && soilderX+80 > groundhogX &&
             soilderDeep < groundhogY+80 && soilderDeep+grid > groundhogY){
@@ -224,19 +228,11 @@ void draw() {
      }
     if (willHurt == false){
            tint(200, 0, 0);
-       groundhogX = grid*4;
-       groundhogY = grid;
-       soilY = 0;
-       soilderX = -50;
-       soilderDeep = floor(random(4)+2)*grid;
-       cabbageX =(floor(random(8)))*grid;
-       cabbageY =(floor(random(4))+2)*grid;
-       cabbagegrow = true;
-       boolean liDeepGround = false;
-       boolean deepGround = false;
-       movement=STOP;
-       willHurt = true;
-       noTint();
+           supTime+=addTime;
+           if (supTime > 30){
+             willHurt = true;
+             noTint();
+             supTime = 0;
            }
     }
 
@@ -268,8 +264,8 @@ void draw() {
        cabbageX =(floor(random(8)))*grid;
        cabbageY =(floor(random(4))+2)*grid;
        cabbagegrow = true;
-       boolean liDeepGround = false;
-       boolean deepGround = false;
+       liDeepGround = false;
+       deepGround = false;
        movement=STOP;
        gameState = GAME_RUN;
 			}
@@ -290,14 +286,18 @@ void keyPressed(){
   if (key == CODED) {
     switch (keyCode) {
       case DOWN:
-        if (deepGround == false){movement=GO_DOWN1;}
-        if (groundhogY < height-grid &&deepGround == true){movement=GO_DOWN2;}
+        if (deepGround == false && moving == false){
+          movement=GO_DOWN1;moving = true;}
+        if (groundhogY < height-grid &&deepGround == true && moving == false){
+          movement=GO_DOWN2;;moving = true;}
         break;
       case LEFT:
-        if (groundhogX > 0){movement=GO_LEFT;}
+        if (groundhogX > 0 && moving == false){
+          movement=GO_LEFT;;moving = true;}
         break;
       case RIGHT:
-        if (groundhogX < width-grid ){movement=GO_RIGHT;}
+        if (groundhogX < width-grid && moving == false){
+          movement=GO_RIGHT;;moving = true;}
         break;
     }
   }
