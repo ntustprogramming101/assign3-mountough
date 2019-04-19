@@ -30,7 +30,6 @@ int soilderDeep = (floor(random(4))+2)*grid;
 int soilderX = -50;
 int soilderXSpeed = 5;
 boolean willHurt = true;
-int time = 0, ms = 1;
 
 int cabbageX =(floor(random(8)))*grid;
 int cabbageY =(floor(random(4))+2)*grid;
@@ -225,11 +224,19 @@ void draw() {
      }
     if (willHurt == false){
            tint(200, 0, 0);
-           time+=ms;
-           if (time > 10){
-             willHurt = true;
-             noTint();
-             time = 0;
+       groundhogX = grid*4;
+       groundhogY = grid;
+       soilY = 0;
+       soilderX = -50;
+       soilderDeep = floor(random(4)+2)*grid;
+       cabbageX =(floor(random(8)))*grid;
+       cabbageY =(floor(random(4))+2)*grid;
+       cabbagegrow = true;
+       boolean liDeepGround = false;
+       boolean deepGround = false;
+       movement=STOP;
+       willHurt = true;
+       noTint();
            }
     }
 
