@@ -226,7 +226,7 @@ void draw() {
     if (willHurt == false){
            tint(200, 0, 0);
            time+=ms;
-           if (time > 60){
+           if (time > 10){
              willHurt = true;
              noTint();
              time = 0;
