@@ -1,3 +1,5 @@
+
+
 final int GAME_START = 0, GAME_RUN = 1, GAME_OVER = 2;
 int gameState = 0;
 
@@ -227,13 +229,18 @@ void draw() {
         }
      }
     if (willHurt == false){
-           tint(200, 0, 0);
-           supTime+=addTime;
-           if (supTime > 30){
-             willHurt = true;
-             noTint();
-             supTime = 0;
-           }
+       groundhogX = grid*4;
+       groundhogY = grid;
+       soilY = 0;
+       soilderX = -50;
+       soilderDeep = floor(random(4)+2)*grid;
+       cabbageX =(floor(random(8)))*grid;
+       cabbageY =(floor(random(4))+2)*grid;
+       cabbagegrow = true;
+       liDeepGround = false;
+       deepGround = false;
+       movement=STOP;
+       willHurt = true;
     }
 
 		// Health UI
@@ -246,6 +253,8 @@ void draw() {
 		break;
 
 		case GAME_OVER: // Gameover Screen
+		noTint();
+		willHurt = true;
 		image(gameover, 0, 0);
 		
 		if(START_BUTTON_X + START_BUTTON_W > mouseX
@@ -267,7 +276,6 @@ void draw() {
        liDeepGround = false;
        deepGround = false;
        movement=STOP;
-       noTint();
        gameState = GAME_RUN;
 			}
 		}else{
