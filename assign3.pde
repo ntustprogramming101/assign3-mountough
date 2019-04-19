@@ -14,7 +14,7 @@ PImage soil8x24,soil0, soil1, soil2, soil3, soil4, soil5, stone1 ,stone2;
 int grid = 80;
 int groundhogX = grid*4;
 int groundhogY = grid;
-int groundhogSpeed = grid/15;
+int groundhogSpeed = 5;
 final int STOP = 0, GO_DOWN1 = 1, GO_DOWN2 = 2, GO_RIGHT = 3, GO_LEFT = 4;
 int movement = STOP;
 boolean moving = false;
